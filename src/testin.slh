@@ -1,0 +1,12 @@
+inc "std/cstr.slm"
+
+class testin
+  head oper proc setup 1 0
+  head oper proc done 0 0
+  head oper proc next 1 0
+
+  head oper proc cstreq 2 0
+  head oper proc eq 2 0
+  head oper proc true 1 0
+  head oper proc false 1 0
+end
