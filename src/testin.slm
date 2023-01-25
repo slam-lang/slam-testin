@@ -2,14 +2,13 @@ inc "testin.slh"
 
 class testin
   oper proc setup 1 0
-    "- " cstr.println
-    cstr.print
+    "- " cstr.print
+    cstr.println
 
     ret
   end
 
   oper proc done 0 0
-    cstr.cr
 
     ret
   end
