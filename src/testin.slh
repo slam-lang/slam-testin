@@ -1,4 +1,5 @@
 inc "std/cstr.slm"
+inc "std/int.slm"
 
 class testin
   head oper proc setup 1 0
