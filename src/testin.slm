@@ -1,0 +1,81 @@
+inc "testin.slh"
+
+class testin
+  oper proc setup 1 0
+    "- " cstr.println
+    cstr.print
+
+    ret
+  end
+
+  oper proc done 0 0
+    cstr.cr
+
+    ret
+  end
+
+  oper proc next 1 0
+    testin.done
+    testin.setup
+
+    ret
+  end
+
+  oper proc cstreq 2 0
+    covr covr cstr.eq ! if
+      " - Assertion Failed`" cstr.print
+      cstr.print
+      "` != `" cstr.print
+      cstr.print
+      "`" cstr.println
+
+      1 quit
+    end
+    disc
+    disc
+
+    ret
+  end
+
+  oper proc eq 2 0
+    covr covr != if
+      " - Assertion Failed`" cstr.print
+      int.print
+      "` != `" cstr.print
+      int.print
+      "`" cstr.println
+
+      1 quit
+    end
+    disc
+    disc
+
+    ret
+  end
+
+  oper proc true 1 0
+    copy 0 == if
+      " - Assertion Failed " cstr.print
+      int.cstr cstr.print
+      " is not true" cstr.println
+
+      1 quit
+    end
+    disc
+
+    ret
+  end
+
+  oper proc false 1 0
+    copy 0 != if
+      " - Assertion Failed " cstr.print
+      int.cstr cstr.print
+      " is not false" cstr.println
+
+      1 quit
+    end
+    disc
+
+    ret
+  end
+end
