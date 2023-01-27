@@ -2,9 +2,14 @@ inc "std/cstr.slm"
 inc "std/int.slm"
 
 class testin
-  head oper proc setup 1 0
-  head oper proc done 0 0
-  head oper proc next 1 0
+  var total 8
+  var pass 8
+  var leak 8
+  var fail 8
+
+  head oper proc test 2 0
+
+  head oper proc result 0 0
 
   head oper proc cstreq 2 0
   head oper proc eq 2 0

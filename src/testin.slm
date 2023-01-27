@@ -1,21 +1,115 @@
 inc "testin.slh"
+inc "std/mem.slm"
+inc "std/heap.slm"
+
+var failed 1
+
+unsafe oper proc handler 1 0
+  disc
+
+  failed 1 putc disc
+
+  ret
+end
 
 class testin
-  oper proc setup 1 0
-    "- " cstr.print
+  oper proc suite 1 0
+    cstr.cr
+    "## " cstr.print
     cstr.println
+    cstr.cr
 
     ret
   end
 
-  oper proc done 0 0
+  unsafe oper proc test 2 0
+    var signal 64
+
+    testin.total copy
+    read 1 +
+    put disc
+
+    " - " cstr.print
+    swap cstr.print
+
+    signal
+    (handler)
+    put disc
+
+    signal 8 +
+    67108864
+    put disc
+
+    signal 16 +
+    (handler)
+    put disc
+
+    8
+    0
+    signal
+    11
+    13
+    sys4
+    copy 0 < if
+      copy -1 * int.print
+    end
+    disc
+
+    ()
+    failed readc
+    copy if
+      " [FAIL]" cstr.println
+
+      testin.fail copy
+      read 1 +
+      put disc
+    end
+    ! if
+      heap.empty copy if
+        " [OK]" cstr.println
+      end
+      ! if
+        " [LEAK]" cstr.println
+        heap.freeall
+
+        testin.leak copy
+        read 1 +
+        put disc
+      end
+
+      testin.pass copy
+      read 1 +
+      put disc
+    end
+
+    failed 0 putc disc
 
     ret
   end
 
-  oper proc next 1 0
-    testin.done
-    testin.setup
+  oper proc results 0 0
+    cstr.cr
+    "## Results" cstr.println
+    cstr.cr
+    " - [" cstr.print
+    testin.pass read int.print
+    "/" cstr.print
+    testin.total read int.print
+    "] Tests passed\n - [" cstr.print
+    testin.leak read int.print
+    "/" cstr.print
+    testin.pass read int.print
+    "] Tests passed with leaks\n - [" cstr.print
+    testin.fail read int.print
+    "/" cstr.print
+    testin.total read int.print
+    "] Tests failed" cstr.print
+
+    cstr.cr
+
+    testin.fail read 0 != if
+      testin.fail read quit
+    end
 
     ret
   end
