@@ -3,11 +3,25 @@ inc "std/mem.slm"
 inc "std/heap.slm"
 
 var failed 1
+var oldretrsp 8
 
 unsafe oper proc handler 1 0
   disc
 
   failed 1 putc disc
+
+  oldretrsp read 16 +
+  asm "pop rax"
+  asm "mov [ret_stack_rsp], rax"
+
+  ret
+end
+
+unsafe oper proc setupold 1 0
+  oldretrsp
+  asm "push ret_stack_rsp"
+  read
+  put disc
 
   ret
 end
@@ -54,6 +68,8 @@ class testin
       copy -1 * int.print
     end
     disc
+
+    setupold
 
     ()
     failed readc
@@ -122,7 +138,8 @@ class testin
       cstr.print
       "`" cstr.println
 
-      1 quit
+      failed 1 putc disc
+      ret
     end
     disc
     disc
@@ -138,7 +155,9 @@ class testin
       int.print
       "`" cstr.println
 
-      1 quit
+      failed 1 putc disc
+
+      ret
     end
     disc
     disc
@@ -152,7 +171,9 @@ class testin
       int.cstr cstr.print
       " is not true" cstr.println
 
-      1 quit
+      failed 1 putc disc
+
+      ret
     end
     disc
 
@@ -165,7 +186,9 @@ class testin
       int.cstr cstr.print
       " is not false" cstr.println
 
-      1 quit
+      failed 1 putc disc
+
+      ret
     end
     disc
 
