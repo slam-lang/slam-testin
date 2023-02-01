@@ -85,7 +85,9 @@ class testin
         " [OK]" cstr.println
       end
       ! if
-        " [LEAK]" cstr.println
+        " [LEAK " cstr.print
+        heap.total int.print
+        " Bytes]" cstr.println
         heap.freeall
 
         testin.leak copy
